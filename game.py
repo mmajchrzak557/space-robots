@@ -3,6 +3,7 @@ import sys
 import animation as an
 import math 
 
+# LALALALALALAALALALA
 class Robot(object):
     def __init__(self, x, y, controlKeys):
         global scaleX, scaleY        
@@ -289,6 +290,7 @@ heart.set_colorkey(0)
 players  = [Robot (wWidth - 340, 0, [pygame.K_LEFT, pygame.K_UP, pygame.K_RIGHT, pygame.K_DOWN]), Robot (110, 650, [pygame.K_a, pygame.K_w, pygame.K_d, pygame.K_s])]
 players[0].right, players[0].left = False, True
 
+### HARDCODED PLATFORMS ###
 platforms = [Platform(140, 400, 150), Platform(110, 900, 350), Platform(190, 200, 350), Platform(440, 650, 400), Platform(540, 400, 200)]
 platforms += [Platform(wWidth - 280, 400, 150), Platform(wWidth - 460, 900, 350), Platform(wWidth - 540, 200, 350)]
     
