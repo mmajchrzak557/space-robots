@@ -14,4 +14,4 @@ Controls:
   
 The game was created with Python and pygame library.
 The goal of the project was to practice Python skills
-with emphasis on OOP.
+with emphasis on OOP in Python.
