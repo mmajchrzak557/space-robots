@@ -4,10 +4,9 @@ def loadSprite(animationName, frameCount, flip, scaleX, scaleY, bullet):
     frames = []
     for i in range(1, frameCount):
         if bullet:
-            frameName = ''.join(['res/', animationName, '_00', str(i - 1), '.png'])
+            frameName = 'res/%s_00%d.png' % (animationName, i - 1)
         else:
-            frameName = ''.join(['res/', animationName, ' (', str(i), ').png'])
-        #print(frameName)
+            frameName = 'res/%s (%d).png' % (animationName, i)
         frame = pygame.image.load(frameName)
         frame = pygame.transform.scale(frame, (scaleX, scaleY))
         frame.convert()

@@ -100,26 +100,27 @@ class Robot(object):
                 self.drop = False
                 self.jump = True
             self.hitbox.x, self.hitbox.y = self.x + self.xOffset, self.y + self.yOffset
-                      
+    
+    def reset_frames(self, key, n, fps):
+        if self.frameCount[key] >= n * fps:
+            self.frameCount[key] = 0
+            if key == 'shoot':
+                self.shoot = False
+            elif key == 'dead':
+                self.frameCount[key] = 10*fps - 1
+        
+            
+                   
                 
         
-    def show(self,window):
-        framesPerSprite = 2       
-        if self.frameCount['shoot'] >= 4*framesPerSprite:
-            self.frameCount['shoot'] = 0
-            self.shoot = False
-        if self.frameCount['jumpShoot'] >= 5*framesPerSprite:
-            self.frameCount['jumpShoot'] = 0
-            self.shoot = False
-        if self.frameCount['run'] >= 8*framesPerSprite:
-            self.frameCount['run'] = 0
-        if self.frameCount['runShoot'] >= 9*framesPerSprite:
-            self.frameCount['runShoot'] = 0
-            self.shoot = False
-        if self.frameCount['10frAnimation'] >= 10*framesPerSprite:
-            self.frameCount['10frAnimation'] = 0
-        if self.frameCount['dead'] >= 10*framesPerSprite:
-            self.frameCount['dead'] = 10*framesPerSprite - 1
+    def show(self, window):
+        framesPerSprite = 2
+        self.reset_frames('shoot', 4, framesPerSprite)
+        self.reset_frames('jumpShoot', 5, framesPerSprite)
+        self.reset_frames('run', 8, framesPerSprite)
+        self.reset_frames('runShoot', 9, framesPerSprite)
+        self.reset_frames('10frAnimation', 10, framesPerSprite)
+        self.reset_frames('dead', 10, framesPerSprite)
             
         prevFrames = dict(self.frameCount)
             
