@@ -4,9 +4,9 @@ def loadSprite(animationName, frameCount, flip, scaleX, scaleY, bullet):
     frames = []
     for i in range(1, frameCount):
         if bullet:
-            frameName = 'res/%s_00%d.png' % (animationName, i - 1)
+            frameName = 'C:/Users/crazy/Desktop/PYTHON/space-robots/res/%s_00%d.png' % (animationName, i - 1)
         else:
-            frameName = 'res/%s (%d).png' % (animationName, i)
+            frameName = 'C:/Users/crazy/Desktop/PYTHON/space-robots/res/%s (%d).png' % (animationName, i)
         frame = pygame.image.load(frameName)
         frame = pygame.transform.scale(frame, (scaleX, scaleY))
         frame.convert()
@@ -17,21 +17,14 @@ def loadSprite(animationName, frameCount, flip, scaleX, scaleY, bullet):
         
 def importRobotSprites(scaleX, scaleY):
     runR       = loadSprite('Run', 9, False, scaleX, scaleY, False)
-    runL       = loadSprite('Run', 9, True, scaleX, scaleY, False)    
     idleR      = loadSprite('Idle', 11, False, scaleX, scaleY, False)       
-    idleL      = loadSprite('Idle', 11, True, scaleX, scaleY, False)    
     jumpR      = loadSprite('Jump', 11, False, scaleX, scaleY, False)
-    jumpL      = loadSprite('Jump', 11, True, scaleX, scaleY, False)
     shootR     = loadSprite('Shoot', 5, False, scaleX, scaleY, False)
-    shootL     = loadSprite('Shoot', 5, True, scaleX, scaleY, False)
     jumpShootR = loadSprite('JumpShoot', 6, False, scaleX, scaleY, False)
-    jumpShootL = loadSprite('JumpShoot', 6, True, scaleX, scaleY, False)
     runShootR  = loadSprite('RunShoot', 10, False, scaleX, scaleY, False)
-    runShootL  = loadSprite('RunShoot', 10, True, scaleX, scaleY, False)
     deadR      = loadSprite('Dead', 11, False, scaleX, scaleY, False)
-    deadL      = loadSprite('Dead', 11, True, scaleX, scaleY, False)
      
-    return runR, runL, idleR, idleL, jumpR, jumpL, shootR, shootL, jumpShootR, jumpShootL, runShootR, runShootL, deadR, deadL
+    return runR, idleR, jumpR, shootR, jumpShootR, runShootR, deadR
 
 def importBulletSprites(bulletWidth, bulletHeight):
     bulletR = loadSprite('Bullet', 6, False, bulletWidth, bulletHeight, True)

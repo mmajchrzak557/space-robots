@@ -102,16 +102,12 @@ class Robot(object):
             self.hitbox.x, self.hitbox.y = self.x + self.xOffset, self.y + self.yOffset
     
     def reset_frames(self, key, n, fps):
-        if self.frameCount[key] >= n * fps:
+        if self.frameCount[key] >= n * fps - 1:
             self.frameCount[key] = 0
             if key == 'shoot':
                 self.shoot = False
             elif key == 'dead':
-                self.frameCount[key] = 10*fps - 1
-        
-            
-                   
-                
+                self.frameCount[key] = 10*fps - 2
         
     def show(self, window):
         framesPerSprite = 2
@@ -124,68 +120,48 @@ class Robot(object):
             
         prevFrames = dict(self.frameCount)
             
-        if self.right:
-            if not self.dead:
-                if not self.run and not self.jump and not self.shoot:
-                    window.blit(idleR[self.frameCount['10frAnimation']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['10frAnimation'] += 1
-                elif not self.run and not self.jump and self.shoot:
-                    window.blit(shootR[self.frameCount['shoot']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['shoot'] += 1
-                elif not self.run and self.jump and not self.shoot:
-                    window.blit(jumpR[self.frameCount['10frAnimation']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['10frAnimation'] += 1
-                elif not self.run and self.jump and self.shoot:
-                    window.blit(jumpShootR[self.frameCount['jumpShoot']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['jumpShoot'] += 1
-                elif self.run and not self.jump and not self.shoot:
-                    window.blit(runR[self.frameCount['run']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['run'] += 1
-                elif self.run and not self.jump and self.shoot:
-                    window.blit(runShootR[self.frameCount['runShoot']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['runShoot'] += 1
-                elif self.run and self.jump and not self.shoot:
-                    window.blit(jumpR[self.frameCount['10frAnimation']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['10frAnimation'] += 1
-                elif self.run and self.jump and self.shoot:
-                    window.blit(jumpShootR[self.frameCount['jumpShoot']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['jumpShoot'] += 1
+        if not self.dead:
+            if not self.run and not self.jump and not self.shoot:
+                animation = idleR
+                frames = '10frAnimation'
+                self.frameCount['10frAnimation'] += 1
+            elif not self.run and not self.jump and self.shoot:
+                animation = shootR
+                frames = 'shoot'
+                self.frameCount['shoot'] += 1
+            elif not self.run and self.jump and not self.shoot:
+                animation = jumpR
+                frames = '10frAnimation'
+                self.frameCount['10frAnimation'] += 1
+            elif self.run and not self.jump and not self.shoot:
+                animation = runR
+                frames = 'run'
+                self.frameCount['run'] += 1
+            elif self.run and not self.jump and self.shoot:
+                animation = runShootR
+                frames = 'runShoot'
+                self.frameCount['runShoot'] += 1
             else:
-                window.blit(deadR[self.frameCount['dead']//framesPerSprite], (self.x, self.y))
-                self.frameCount['dead'] +=1
-        elif self.left:
-            if not self.dead:
-                if not self.run and not self.jump and not self.shoot:
-                    window.blit(idleL[self.frameCount['10frAnimation']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['10frAnimation'] += 1
-                elif not self.run and not self.jump and self.shoot:
-                    window.blit(shootL[self.frameCount['shoot']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['shoot'] += 1
-                elif not self.run and self.jump and not self.shoot:
-                    window.blit(jumpL[self.frameCount['10frAnimation']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['10frAnimation'] += 1
-                elif not self.run and self.jump and self.shoot:
-                    window.blit(jumpShootL[self.frameCount['jumpShoot']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['jumpShoot'] += 1
-                elif self.run and not self.jump and not self.shoot:
-                    window.blit(runL[self.frameCount['run']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['run'] += 1
-                elif self.run and not self.jump and self.shoot:
-                    window.blit(runShootL[self.frameCount['runShoot']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['runShoot'] += 1
-                elif self.run and self.jump and not self.shoot:
-                    window.blit(jumpL[self.frameCount['10frAnimation']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['10frAnimation'] += 1
-                elif self.run and self.jump and self.shoot:
-                    window.blit(jumpShootL[self.frameCount['jumpShoot']//framesPerSprite], (self.x, self.y))
-                    self.frameCount['jumpShoot'] += 1
-            else:
-                window.blit(deadL[self.frameCount['dead']//framesPerSprite], (self.x, self.y))
-                self.frameCount['dead'] +=1
-            for key in prevFrames:
-                k = str(key)
-                if self.frameCount[k] == prevFrames[k]:
-                    self.frameCount[k] = 0            
+                animation = jumpShootR
+                frames = 'jumpShoot'
+                self.frameCount['jumpShoot'] += 1
+        else:
+            animation = deadR
+            frames = 'dead'
+            self.frameCount['dead'] +=1
+                        
+        blit = animation[self.frameCount[frames]//framesPerSprite]
+        if self.left:
+            blit = pygame.transform.flip(blit, True, False)
+            
+        window.blit(blit, (self.x, self.y))
+            
+        for key in prevFrames:
+            k = str(key)
+            if self.frameCount[k] == prevFrames[k]:
+                self.frameCount[k] = 0 
+                
+                
 
     def showLives(self, window, left):
         w = heart.get_width()
@@ -278,14 +254,14 @@ pygame.key.set_repeat(0,100)
 pygame.mouse.set_visible(False)
 clock = pygame.time.Clock()
 
-runR, runL, idleR, idleL, jumpR, jumpL, shootR, shootL, jumpShootR, jumpShootL, runShootR, runShootL, deadR, deadL = an.importRobotSprites(scaleX, scaleY)
+runR, idleR, jumpR, shootR, jumpShootR, runShootR, deadR = an.importRobotSprites(scaleX, scaleY)
 bulletR, bulletL = an. importBulletSprites(22, 14)
-background = pygame.transform.scale(pygame.image.load('res/back.png'), (wWidth, wHeight)).convert()
-platformTile = pygame.transform.scale((pygame.image.load('res/tile.png')), (25, 35)).convert()
-sheet = pygame.transform.scale(pygame.image.load('res/Explosion (3).png'), (576, 48)).convert()
+background = pygame.transform.scale(pygame.image.load('C:/Users/crazy/Desktop/PYTHON/space-robots/res/back.png'), (wWidth, wHeight)).convert()
+platformTile = pygame.transform.scale((pygame.image.load('C:/Users/crazy/Desktop/PYTHON/space-robots/res/tile.png')), (25, 35)).convert()
+sheet = pygame.transform.scale(pygame.image.load('C:/Users/crazy/Desktop/PYTHON/space-robots/res/Explosion (3).png'), (576, 48)).convert()
 size = sheet.get_size()
 boom = an.strip_from_sheet(sheet, (0,0), (size[0]/12, size[1]), 12, 1)
-heart = pygame.transform.scale(pygame.image.load('res/heart.png'), (30,30)).convert()
+heart = pygame.transform.scale(pygame.image.load('C:/Users/crazy/Desktop/PYTHON/space-robots/res/heart.png'), (30,30)).convert()
 heart.set_colorkey(0)
 
 players  = [Robot (wWidth - 340, 0, [pygame.K_LEFT, pygame.K_UP, pygame.K_RIGHT, pygame.K_DOWN]), Robot (110, 650, [pygame.K_a, pygame.K_w, pygame.K_d, pygame.K_s])]
