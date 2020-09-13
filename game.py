@@ -2,6 +2,7 @@ import pygame
 import sys
 import animation as an
 import math 
+import os
 
 # LALALALALALAALALALA
 class Robot(object):
@@ -256,12 +257,12 @@ clock = pygame.time.Clock()
 
 runR, idleR, jumpR, shootR, jumpShootR, runShootR, deadR = an.importRobotSprites(scaleX, scaleY)
 bulletR, bulletL = an. importBulletSprites(22, 14)
-background = pygame.transform.scale(pygame.image.load('C:/Users/crazy/Desktop/PYTHON/space-robots/res/back.png'), (wWidth, wHeight)).convert()
-platformTile = pygame.transform.scale((pygame.image.load('C:/Users/crazy/Desktop/PYTHON/space-robots/res/tile.png')), (25, 35)).convert()
-sheet = pygame.transform.scale(pygame.image.load('C:/Users/crazy/Desktop/PYTHON/space-robots/res/Explosion (3).png'), (576, 48)).convert()
+background = pygame.transform.scale(pygame.image.load(os.getcwd() + '/res/back.png'), (wWidth, wHeight)).convert()
+platformTile = pygame.transform.scale((pygame.image.load(os.getcwd() + '/res/tile.png')), (25, 35)).convert()
+sheet = pygame.transform.scale(pygame.image.load(os.getcwd() +'/res/Explosion (3).png'), (576, 48)).convert()
 size = sheet.get_size()
 boom = an.strip_from_sheet(sheet, (0,0), (size[0]/12, size[1]), 12, 1)
-heart = pygame.transform.scale(pygame.image.load('C:/Users/crazy/Desktop/PYTHON/space-robots/res/heart.png'), (30,30)).convert()
+heart = pygame.transform.scale(pygame.image.load(os.getcwd() + '/res/heart.png'), (30,30)).convert()
 heart.set_colorkey(0)
 
 players  = [Robot (wWidth - 340, 0, [pygame.K_LEFT, pygame.K_UP, pygame.K_RIGHT, pygame.K_DOWN]), Robot (110, 650, [pygame.K_a, pygame.K_w, pygame.K_d, pygame.K_s])]
