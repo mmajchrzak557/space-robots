@@ -1,12 +1,13 @@
 import pygame
+import os
 
 def loadSprite(animationName, frameCount, flip, scaleX, scaleY, bullet):
     frames = []
     for i in range(1, frameCount):
         if bullet:
-            frameName = 'C:/Users/crazy/Desktop/PYTHON/space-robots/res/%s_00%d.png' % (animationName, i - 1)
+            frameName = '%s/res/%s_00%d.png' % (os.getcwd(), animationName, i - 1)
         else:
-            frameName = 'C:/Users/crazy/Desktop/PYTHON/space-robots/res/%s (%d).png' % (animationName, i)
+            frameName = '%s/res/%s (%d).png' % (os.getcwd(), animationName, i)
         frame = pygame.image.load(frameName)
         frame = pygame.transform.scale(frame, (scaleX, scaleY))
         frame.convert()
